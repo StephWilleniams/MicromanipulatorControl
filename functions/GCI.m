@@ -8,7 +8,7 @@ function [path,image] = GCI(baseFile, imNum, )
     n = length(a); % Total number of files.
     exFile = 3; % Index of example file.
     cn = length(a(3).name); % Character array length of useful files.
-    junkStart = 2; % Files at start to omit.
+    junkStart = 0; % Files at start to omit.
     junkEnd = 1; % Files at end to omit.
     stn = length(junkStart+1:n-junkEnd); % Number of useful files.
     
@@ -17,7 +17,7 @@ function [path,image] = GCI(baseFile, imNum, )
     store = zeros(stn,1); % Store of the 'image order' values.
     
     % Get the order the images where taken.
-    for i = 3:n-1
+    for i = 2+junkStat:n-junkEnd
         temp = a(i).name(1:10);
         temp = flip(temp);
         store(i) = str2num(temp);
@@ -25,11 +25,12 @@ function [path,image] = GCI(baseFile, imNum, )
     
     [~,maI] = max(store); % Determine the most recent image.
     path = [baseFile a(2+maI).name]; % Get the name of that file.
-    param_file_name = [baseFile 'acquisitionmetadata.txt']; % get the metadata to do .dat > .png
+    param_file_name = [baseFile 'acquisitionmetadata.ini']; % get the metadata to do .dat > .png
 
     [images,errcode] = readAndorDatImage(path, param_file_name);
 
-    image = rgb2grey(images(:,:,imNum));
+    % image = rgb2grey(images(:,:,imNum)); % Convert RGB to GS.
+    image = images(:,:,imNum) / max(max( images(:,:,imnum) )); % Normalise a greyscale image to 0->1.
     
 end
 
