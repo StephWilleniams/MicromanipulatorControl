@@ -2,6 +2,7 @@
 
 %% Add function folder to filepath
 
+% This may need to be modified to prevent double loading a python engine.
 exeLoc = '~/python.exe' % This is the location of the python executable. This will likely be in /spyder/.
 pe = pyenv('Version',exeLoc); % Initialise the python engine.
 addpath('functions/'); % Load the MatLab functions.
