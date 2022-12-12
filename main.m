@@ -2,8 +2,12 @@
 
 %% Add function folder to filepath
 
-addpath('functions/');
-addpath('pythonCode');
+exeLoc = '~/python.exe' % This is the location of the python executable. This will likely be in /spyder/.
+pe = pyenv('Version',exeLoc); % Initialise the python engine.
+addpath('functions/'); % Load the MatLab functions.
+py.importlib.import_module('serial');
+addpath('pythonCode'); % Load the Python functions.
+fileLoc = 'data/'; % set the location of the images to be processed.
 
 %%
 
@@ -11,7 +15,7 @@ addpath('pythonCode');
 waitTime = 600; % Measured in seconds.
 
 % Set the base image (requires image to be taken using zyla).
-[basefiName, baseImage] = GCI('files/',1);
+[basefiName, baseImage] = GCI(fileLoc,1);
 
 % Imagesc shows image. Use the data-tip tool to determine a ROI.
 figure
@@ -41,7 +45,7 @@ while( 1 ) % Use stop/ctrl-x to cancel the run.
     pause(waitTime) % Wait until next correction.
 
     % Get the new image for comparison.
-    [newfiName, newImage] = GCI('files/',1);
+    [newfiName, newImage] = GCI(fileLoc,1);
 
     % Get the shift values.
     [dx,dy,dz] = process_image_subpix(newImage,baseImage,x1,x2,y1,y2);
