@@ -33,4 +33,6 @@ TBD: the code currently does not invoke camera image acquisition. This would be 
 	move to position -Z + dz 
 > Get image contrast(/quality metric), choose height with best metric.
 
+Comment: when Matlab executes a python script, as yet, I am unsure how to include a preexisting python script containing functions. Thus, the functions need to be redefined in each script in which they are executed (which is why mover and zeroer have replicated functions).
+
 Comment: there is a routine in the micropipette which can be used the set the speed at which the movements occur. If there is a `jerkiness' to the motion it could be that using this feature will fix this? 
